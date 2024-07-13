@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BlogProject</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/header.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="nav__content">
+                <div class="logo"><a asp-area="" asp-controller="Home" asp-action="Index">BlogProject</a></div>
+                <label for="check" class="checkbox">
+                    <i class="ri-menu-line"></i>
+                </label>
+                <input type="checkbox" name="check" id="check" />
+                <ul>
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Blog">Blog</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Post" asp-action="AddPost">Blog Ekle</a>
+                        </li>
+                          <li>
+                            <a asp-area="" asp-controller="Post" asp-action="PostList">Blogları Düzenle</a>
+                        </li>
+                        <li>
+                            <a asp-area="" asp-controller="Category" asp-action="CategoryList">Kategori Ve Yazarlar </a>
+                        </li>
+                         
+                       
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+
+    </footer>
+    <footer class="footer-16371">
+     
+            <div class="row justify-content-center">
+                <div class="col-md-9 text-center">
+                    <div class="footer-site-logo mb-4">
+                        <a href="#">BlogProject </a>
+                    </div>
+                    <ul class="list-unstyled nav-links mb-5">
+                        <li><a asp-area="" asp-controller="Home" asp-action="Privacy">BlogProject</a></li>
+                        <li><a asp-area="" asp-controller="Post" asp-action="AddPost">Blog Ekle</a></li>
+                      
+                    </ul
+                    <div class="copyright">
+                        <p class="mb-0"><small>© Colorlib. All Rights Reserved.</small></p>
+                    </div>
+                </div>
+            </div>
+     
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

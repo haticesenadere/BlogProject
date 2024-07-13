@@ -1,0 +1,49 @@
+﻿@model IEnumerable<PostDto>
+
+@{
+    ViewData["Title"] = "Blog Sayfası";
+  
+}
+
+
+            @foreach (var post in Model)
+            {
+                <div class="w3-row">
+    <div class="w3-col l8 s12">
+            <div class="w3-container">
+                <h3><b>@post.Title</b></h3>
+                @if ( ViewBag.AuthorName.ContainsKey(post.AuthorId))
+                {
+                <h5>@ViewBag.AuthorName[post.AuthorId] </h5>
+                }
+
+                @if (ViewBag.CategoryName.ContainsKey(post.CategoryId))
+                {
+                    <p><span class="w3-opacity">@ViewBag.CategoryName[post.CategoryId] </span></p>
+                    <p class="card-text"><strong>Kategori:</strong> @ViewBag.CategoryName[post.CategoryId]</p>
+                }
+              
+            </div>
+          
+
+            <div class="w3-container">
+                <p>@post.Content</p>
+                <div class="w3-col m4 w3-hide-small">
+                    <p><span class="w3-padding-large w3-right"><b>@post.PublishedDate.ToLocalTime().ToString("dd.MM.yyyy  HH:mm")</b></span></p>
+                </div>
+                <div class="w3-row">
+                    <div class="w3-col m8 s12">
+                        <p><button class="new-entry-link"><b>READ MORE »</b></button></p>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="/Post/DeletePost?id=@post.PostId" class="new-entry-link">Sil</a>
+    <a href="/Post/UpdatePost?id=@post.PostId" class="new-entry-link">Güncelle</a>
+
+    <hr width="100%"  size="15px" />
+            }
+

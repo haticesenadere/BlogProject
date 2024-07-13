@@ -1,0 +1,28 @@
+﻿@model IEnumerable<AuthorDto>
+
+@{
+    ViewData["Title"] = "Yazar Listesi";
+}
+
+<h2 class="my-4">Yazar Listesi</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+
+            <th>Yazar Adı</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var auth in Model)
+        {
+            <tr>
+                <td>@auth.Name</td>
+                <td>
+                    <a href="/Category/DeleteCategory?id=@auth.AuthorId" class="btn btn-primary">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

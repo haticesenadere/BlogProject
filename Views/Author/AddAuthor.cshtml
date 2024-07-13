@@ -1,0 +1,24 @@
+﻿@model AuthorDto
+
+
+@{
+    ViewData["Title"] = "Yazar Ekle";
+}
+
+<h2 class="my-4"> Yazar Ekle</h2>
+
+<form asp-action="AddAuthor" method="post" enctype="multipart/form-data">
+
+    <div class="form-group">
+        <label>Yazar Adı</label>
+        <input type="text" class="form-control" asp-for="Name" />
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-secondary">Ekle</button>
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}

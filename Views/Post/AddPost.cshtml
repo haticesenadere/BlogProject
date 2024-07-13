@@ -1,0 +1,61 @@
+﻿@model PostDto 
+
+@{
+    ViewData["Title"] = "Blog Yükle";
+}
+
+<h1>Blog Yazını Yükle</h1>
+
+<form asp-action="AddPost" method="post" enctype="multipart/form-data">
+
+<div class="form-group">
+    <label>Kategori</label>
+    <div class="flex-container">
+        <select class="form-control" asp-for="CategoryId">
+            <option value="">Seçiniz</option>
+            @foreach (var category in ViewBag.Categories)
+            {
+                <option value="@category.CategoryId">@category.Name</option>
+            }
+        </select>
+        <a href="/Category/AddCategory" class="new-entry-link">Yeni ekle</a>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="author">Yazar</label>
+    <div class="flex-container">
+        <select class="form-control" asp-for="AuthorId">
+            <option value="">Seçiniz</option>
+            @foreach (var auth in ViewBag.Authors)
+            {
+                <option value="@auth.AuthorId">@auth.Name</option>
+            }
+        </select>
+        <a href="/Author/AddAuthor" class="new-entry-link">Yeni ekle</a>
+    </div>
+</div>
+
+    <div class="form-group">
+        <label for="title">Başlık</label>
+        <input type="text" class="form-control" asp-for="Title" />
+    </div>
+    <div class="form-group">
+        <label>Özet</label>
+        <input type="text" class="form-control" asp-for="Summary" />
+    </div>
+    <div class="form-group">
+        <label>İçerik</label>
+        <input type="text" class="form-control" asp-for="Content" />
+    </div>
+
+    <button type="submit" class="new-entry-link">Ekle</button>
+
+
+
+</form>
+
+@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}
