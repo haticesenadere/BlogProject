@@ -9,11 +9,13 @@ namespace BlogProject.Controllers
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IAuthorRepository _authorRepository;   
+        private readonly IPostRepository _postRepository;   
 
-        public CategoryController(ICategoryRepository categoryRepository, IAuthorRepository authorRepository  )
+        public CategoryController(ICategoryRepository categoryRepository, IAuthorRepository authorRepository, IPostRepository postRepository)
         {
             _categoryRepository = categoryRepository;
             _authorRepository = authorRepository;
+            _postRepository = postRepository;
 
         }
 
@@ -41,6 +43,23 @@ namespace BlogProject.Controllers
         public IActionResult CategoryList()
         {
             ViewBag.Author = _authorRepository.GetAllAuthors();
+            ViewBag.CategoryName = _categoryRepository.GetAllCategories().ToDictionary(c => c.CategoryId, c => c.Name);
+            ViewBag.AuthorName = _authorRepository.GetAllAuthors().ToDictionary(a => a.AuthorId, a => a.Name);
+            var blogs = _postRepository.GetAllPosts();
+
+            var authorPostCounts = blogs
+                .GroupBy(b => b.AuthorId)
+                .Select(g => new { AuthorId = g.Key, PostCount = g.Count() })
+                .ToDictionary(a => a.AuthorId, a => a.PostCount);
+
+
+            var categoryCounts = blogs
+                .GroupBy(b => b.CategoryId)
+                .Select(g => new { CategoryID = g.Key, PostCount = g.Count() })
+                .ToDictionary(a => a.CategoryID, a => a.PostCount);
+
+            ViewBag.CategoryCounts = categoryCounts;
+            ViewBag.AuthorPostCounts = authorPostCounts;
 
             var category = _categoryRepository.GetAllCategories();
             return View(category);

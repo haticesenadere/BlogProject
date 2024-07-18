@@ -2,54 +2,82 @@
 
 @{
     ViewData["Title"] = "Kategori ve Yazar Listesi";
+    var authorPostCounts = ViewBag.AuthorPostCounts as Dictionary<int, int>;
+    var categoryCounts = ViewBag.CategoryCounts as Dictionary<int, int>;
 }
 
 
-    <div class="row">
-        <!-- Kategori Listesi -->
-        <div class="col-md-6">
-            <h2 class="my-4">Kategori Listesi</h2>
-            <table class="table table-striped">
-                <thead>
+<div class="row">
+    <!-- Kategori Listesi -->
+    <div class="col-md-6">
+        <h2 class="my-4">Kategori Listesi</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Adı</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var category in Model)
+                {
                     <tr>
-                        <th>Adı</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var category in Model)
-                    {
-                        <tr>
-                            <td>@category.Name</td>
-                            <td>
-                                <a href="/Category/DeleteCategory?id=@category.CategoryId" class="new-entry-link">Sil</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                        <td>
+                            @category.Name
+                            @if (!ViewBag.categoryCounts.ContainsKey(category.CategoryId))
+                            {
+                                <strong> (0) </strong>
+                            }
+                            else
+                            {
+                                <strong> @ViewBag.CategoryName[category.CategoryId] (@categoryCounts[category.CategoryId])</strong>
+                            }
+                        </td>
 
-        <!-- Yazar Listesi -->
-        <div class="col-md-6">
-            <h2 class="my-4">Yazar Listesi</h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Adı</th>
+                        <td>
+                            <a href="/Category/DeleteCategory?id=@category.CategoryId" class="new-entry-link">Sil</a>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var author in ViewBag.Author)
-                    {
-                        <tr>
-                            <td>@author.Name</td>
-                            <td>
-                                <a href="/Author/DeleteAuthor?id=@author.AuthorId" class="new-entry-link">Sil</a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-   
-</>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Yazar Listesi -->
+    <div class="col-md-6">
+        <h2 class="my-4">Yazar Listesi</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Adı</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var author in ViewBag.Author)
+                {
+                    <tr>
+                        <td>
+                        @author.Name
+
+                            @if (!ViewBag.authorPostCounts.ContainsKey(author.AuthorId))
+                            {
+                                <strong> (0) </strong>
+                            }
+                            else
+                            {
+                                <strong>
+                                    @ViewBag.AuthorName[@author.AuthorId] (@authorPostCounts[author.AuthorId])
+                                </strong>
+                            }
+                        </td>
+                        <td>
+                            <a href="/Author/DeleteAuthor?id=@author.AuthorId" class="new-entry-link">Sil</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    </>
+
+

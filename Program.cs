@@ -12,6 +12,7 @@ namespace BlogProject
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+
 			builder.Services.AddDbContext<DataContext>(options =>
 			{
 				var config = builder.Configuration;

@@ -1,7 +1,11 @@
 ﻿using BlogProject.Data;
 using BlogProject.Models;
 using BlogProject.Repository;
+using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
+using System.Reflection.Metadata;
+using System;
 
 namespace BlogProject.Controllers
 {
@@ -97,5 +101,29 @@ namespace BlogProject.Controllers
             return RedirectToAction("PostList");
         }
        
+        public IActionResult GetALlPost()
+        {
+            ViewBag.CategoryName = _categoryRepository.GetAllCategories().ToDictionary(c => c.CategoryId, c => c.Name);
+            ViewBag.AuthorName = _authorRepository.GetAllAuthors().ToDictionary(a => a.AuthorId, a => a.Name);
+            var blogs = _postRepository.GetAllPosts();
+
+            var authorPostCounts = blogs
+                .GroupBy(b => b.AuthorId)
+                .Select(g => new { AuthorId = g.Key, PostCount = g.Count() })
+                .ToDictionary(a => a.AuthorId, a => a.PostCount);
+
+
+            var categoryCounts = blogs
+                .GroupBy(b => b.CategoryId)
+                .Select(g => new { CategoryID = g.Key, PostCount = g.Count() })
+                .ToDictionary(a => a.CategoryID, a => a.PostCount);
+
+            ViewBag.CategoryCounts = categoryCounts;
+            ViewBag.AuthorPostCounts = authorPostCounts;
+            ViewBag.Categories = _categoryRepository.GetAllCategories();
+            ViewBag.Author = _authorRepository.GetAllAuthors();
+            return View(blogs);
+        }
+
     }
 }
